@@ -66,6 +66,13 @@ class _BytebankBalanceState extends State<BytebankBalance> {
     );
   }
 
+  updateBalance(double balance) {
+    setState(() {
+      isShowingBalance = true;
+      userBalance = balance;
+    });
+  }
+
   onVisibilityBalanceClicked(BuildContext context) {
     if (isShowingBalance) {
       setState(() {
@@ -80,10 +87,7 @@ class _BytebankBalanceState extends State<BytebankBalance> {
                 balanceService
                     .getBalance(userId: widget.userId, pin: pin)
                     .then((double balance) {
-                  setState(() {
-                    isShowingBalance = true;
-                    userBalance = balance;
-                  });
+                  updateBalance(balance);
                 });
               }
             });
@@ -94,10 +98,7 @@ class _BytebankBalanceState extends State<BytebankBalance> {
               if (pin != null) {
                 balanceService.createPin(userId: widget.userId, pin: pin).then(
                   (double balance) {
-                    setState(() {
-                      isShowingBalance = true;
-                      userBalance = balance;
-                    });
+                    updateBalance(balance);
                   },
                 );
               }
